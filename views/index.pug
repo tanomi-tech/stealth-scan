@@ -1,0 +1,78 @@
+extends layout
+
+block content
+  .text-center.pb-5
+    .container
+      .row
+        .col-xs-12.col-md-8.offset-md-2
+          h1.display-5.lead.py-4
+            | Uncover 
+            strong.fw-bold Invisible Trackers 
+            | for a Secure Browsing Experience
+          .row
+            .col-md-8.offset-md-2
+              form#searchForm
+                .input-group.input-group-lg
+                  span#inputGroup-sizing-lg.input-group-text 
+                    i.bi.bi-globe
+                  input.form-control.form-control-dark#t(
+                    type='text', 
+                    aria-label='Search URL',
+                    aria-describedby='inputGroup-sizing-lg',
+                    placeholder="Enter URL here (e.g. google.com)",
+                    pattern="^((https?):\/\/)(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$"
+                    title="Please enter valid URL",
+                    )
+                  button.btn.btn-outline-info#collect(type="submit") Scan
+  .container.border-top.py-5
+    .d-flex.justify-content-center
+      #progress
+          .progress__check
+            .progress__check__icon
+              i.bi.bi-globe
+            span.progress__check__content
+          .progress__check
+            .progress__check__icon
+              i.bi.bi-search
+            span.progress__check__content
+          .progress__check
+            .progress__check__icon
+              i.bi.bi-eye
+            span.progress__check__content
+    #reports.w-100.pt-5
+      .row
+        .col-xs-12.col-md-6.offset-md-3
+          p.h4.fw-light.text-center.mb-5
+            span Enter a URL to generate a report of all trackers on the website, or try out the examples below.
+        .col-md-4.mb-3.m-md-0
+          .bg-secondary-subtle.text-start.p-3.rounded-3.h-100.d-flex.flex-column.justify-content-between
+            p.text-secondary
+              i.bi.bi-megaphone.me-2
+              | Marketing
+            p 
+              span HubSpot Business Software | For Marketing, Sales & Service
+            button.btn.btn-outline-info(
+              onclick="scanSite('https://hubspot.com')"
+            ) Scan HubSpot
+        .col-md-4.mb-3.m-md-0
+          .bg-secondary-subtle.text-start.p-3.rounded-3.h-100.d-flex.flex-column.justify-content-between
+            p.text-secondary
+              i.bi.bi-newspaper.me-2
+              | News
+            p
+              span CNN: Breaking News, Latest News and Videos
+            button.btn.btn-outline-info(
+              onclick="scanSite('https://cnn.com')"
+            ) Scan CNN
+        .col-md-4.mb-3.m-md-0
+          .bg-secondary-subtle.text-start.p-3.rounded-3.h-100.d-flex.flex-column.justify-content-between
+            p.text-secondary
+              i.bi.bi-play-btn.me-2
+              | Media
+            p 
+              span YouTube | Broadcast Yourself
+            button.btn.btn-outline-info(
+              onclick="scanSite('https://youtube.com')"
+            ) Scan YouTube
+
+
