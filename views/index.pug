@@ -10,20 +10,35 @@ block content
             strong.fw-bold Invisible Trackers 
             | for a Secure Browsing Experience
           .row
-            .col-md-8.offset-md-2
-              form#searchForm
-                .input-group.input-group-lg
-                  span#inputGroup-sizing-lg.input-group-text 
-                    i.bi.bi-globe
-                  input.form-control.form-control-dark#t(
-                    type='text', 
-                    aria-label='Search URL',
-                    aria-describedby='inputGroup-sizing-lg',
-                    placeholder="Enter URL here (e.g. google.com)",
-                    pattern="^((https?):\/\/)(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$"
-                    title="Please enter valid URL",
-                    )
-                  button.btn.btn-outline-info#collect(type="submit") Scan
+            .col-lg-8.offset-lg-2
+              .d-none.d-md-block
+                form.searchForm
+                  .input-group.input-group-lg
+                    span#inputGroup-sizing-lg.input-group-text 
+                      i.bi.bi-globe
+                    input.form-control.form-control-dark#t(
+                      type='text', 
+                      aria-label='Search URL',
+                      aria-describedby='inputGroup-sizing-lg',
+                      placeholder="Enter URL here (e.g. google.com)",
+                      pattern="^((https?):\/\/)(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$"
+                      title="Please enter valid URL",
+                      )
+                    button.btn.btn-outline-info#collect(type="submit") Scan
+              .d-md-none
+                form.searchForm
+                  .input-group.input-group
+                    span#inputGroup-sizing-lg.input-group-text 
+                      i.bi.bi-globe
+                    input.form-control.form-control-dark#t(
+                      type='text', 
+                      aria-label='Search URL',
+                      aria-describedby='inputGroup-sizing-lg',
+                      placeholder="Enter URL here (e.g. google.com)",
+                      pattern="^((https?):\/\/)(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$"
+                      title="Please enter valid URL",
+                      )
+                    button.btn.btn-outline-info#collect(type="submit") Scan
   .container.border-top.py-5
     .d-flex.justify-content-center
       #progress

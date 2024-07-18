@@ -92,6 +92,11 @@ details[open] summary {
   opacity: 1;
 }
 
+.favicon-preview {
+  background: #fff;
+  padding: 0.5rem;
+}
+
 @keyframes pulse-white {
 	0% {
 		transform: scale(0.95);
