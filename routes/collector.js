@@ -1,24 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const {fork} = require('child_process');
-const child = fork(`${__dirname}/../child.js`);
-const jobs = {};
-let jobId = 0;
+const {
+    Worker,
+} = require("worker_threads");
 
-function addJob(data, callback) {
-    const id = jobId++;
-    jobs[id] = callback;
-    child.send({id, data});
+function addWorker(data, callback) {
+    const worker = new Worker(`${__dirname}/../worker.js`, {
+        workerData: {data}
+    });
+    worker.on('message', callback);
+    worker.on('error', (err) => {
+        console.error(err);
+        callback({
+                error: true,
+                message: err
+        })
+    });
+    worker.on('exit', (code) => {
+        if (code !== 0) {
+            console.error(`Worker stopped with exit code ${code}`);
+        }
+    });
 };
 
-child.on('message', function(message) {
-    jobs[message.id](message.data);
-});
-
 router.get('/', (req, res) => {
-    addJob({
+    addWorker({
         baseCmd: `website-evidence-collector`,
-        flags: ['--no-output', '--json', req.query.url, '--', '--no-sandbox']
+        flags: [
+            '--no-output', 
+            '--json', 
+            req.query.url, 
+            '--', 
+            '--no-sandbox', 
+            '--headless',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-session-crashed-bubble',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process',
+            '--noerrdialogs',
+            '--disable-gpu'
+        ]
     }, (result) => {
         if (result?.error === true) {
             res.status(500).send();
