@@ -3,15 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node --env-file=.env ./database.js && node --env-file=.env ./bin/www"
   },
   "dependencies": {
+    "@botpoison/node": "^0.1.10",
     "cookie-parser": "~1.4.4",
+    "csv-reader": "^1.0.12",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "nodemailer": "^6.9.14",
     "pug": "2.0.0-beta11",
-    "website-evidence-collector": "https://github.com/EU-EDPS/website-evidence-collector/tarball/latest"
+    "sqlite3": "^5.1.7",
+    "tslib": "^2.6.3"
   }
 }

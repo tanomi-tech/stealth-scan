@@ -1,18 +1,19 @@
-FROM ghcr.io/puppeteer/puppeteer:latest
+FROM node:lts
 
-ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/google-chrome-stable
-ENV DBUS_SESSION_BUS_ADDRESS disable:
+RUN apt update
 
-USER root
+RUN apt-get install -y sqlite3
 
-RUN mkdir -p ./stealth-scan
-
-WORKDIR /home/pptruser/stealth-scan
+WORKDIR /home/app/stealth-scan
 
 COPY . ./
 RUN npm install
 
-USER pptruser
+RUN node --env-file=.env ./database.js
+
+RUN sqlite3 reports.db -cmd '.mode csv' -cmd '.import ./reports/reports.csv reports'
+
+USER node
 
 EXPOSE 3000
 CMD [ "npm", "start"]

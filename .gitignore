@@ -9,3 +9,8 @@ npm-debug.log
 
 # IDE
 .idea/
+
+website-evidence-collector/
+most-visited-websites.csv
+local-utils/
+*.db
