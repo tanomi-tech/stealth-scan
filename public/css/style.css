@@ -10,7 +10,7 @@ table td {
   vertical-align: middle;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 450px) {
   .table {
     min-width: 800px;
   }
