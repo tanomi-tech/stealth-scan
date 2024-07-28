@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
             error: true
         });
     }
-    res.render('index', { title: 'Stealth Scan', data: rows});
+    res.render('index', { title: 'Stealth Scan', data: rows, umami: process.env.SS_UMAMI_ID});
   });
 });
 

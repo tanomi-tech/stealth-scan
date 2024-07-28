@@ -18,6 +18,7 @@ html(data-bs-theme="dark")
     meta(property="og:type", content="website")
     meta(property="og:url", content="https://stealthscan.tanomitech.com")
     meta(property="og:image", content="https://stealthscan.tanomitech.com/images/stealthscan.png")
+    script(defer, src="https://cloud.umami.is/script.js", data-website-id="" + umami +"")
   body.text-white.bg-dark.d-flex.flex-column.vh-100
     header.py-3
       .container
@@ -45,16 +46,16 @@ html(data-bs-theme="dark")
             p.fs-6.p-0.m-0
             | Have a website you'd like for us to add on Stealth Scan, or have ideas to improve the site? Let us know by filling out the form below or submit a ticket on 
             a(href="https://github.com/tanomi-tech/stealth-scan/issues") GitHub
-            form
+            form#requestForm
               .mb-3
                 label.col-form-label(for="recipient-name") Email:
-                input.form-control#email(type="text")
+                input.form-control#email(type="email")
               .mb-3
                 label.col-form-label(for="message-text") Message:
                 textarea.form-control#message
           .modal-footer
             button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Close
-            button.btn.btn-primary#sendRequest(type="button") Send
+            input.btn.btn-primary#sendRequest(type="submit" form="requestForm" value="Send")
     footer.mt-auto.text-white-50.text-center.py-3
       p.fs-6.fw-light 
         | Made with 

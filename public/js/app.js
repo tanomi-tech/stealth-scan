@@ -2,14 +2,15 @@ const searchBars = document.querySelectorAll('.search-bar');
 const searchForms = document.querySelectorAll('.searchForm');
 const reportbox = document.querySelector('#report');
 const progressChecks = document.querySelectorAll('#progress .progress__check');
-const modal = document.querySelector('#exampleModal');
+const modal = document.querySelector('#reportModal');
 const hosts = document.querySelectorAll('tr[data-host]');
 const requestModal = document.querySelector('#requestFormModal');
+const requestForm = document.querySelector('#requestForm');
 const email = requestModal.querySelector('#email');
 const message = requestModal.querySelector('#message');
 const sendRequestBtn = document.querySelector('#sendRequest');
 
-// Init Tooltip
+// Init Bootstrap 5 Tooltip
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
@@ -150,7 +151,7 @@ filterBtns.forEach((btn) => {
 });
 
 requestModal.addEventListener('show.bs.modal', () => {
-    sendRequestBtn.textContent='Send';
+    sendRequestBtn.value ='Send';
     sendRequestBtn.classList.remove('btn-success');
     sendRequestBtn.classList.remove('btn-danger');
     sendRequestBtn.classList.add('btn-primary');
@@ -159,8 +160,10 @@ requestModal.addEventListener('show.bs.modal', () => {
     message.value = '';
 });
 
-sendRequestBtn.addEventListener('click', async ($e) => {
-    sendRequestBtn.textContent = 'Sending...';
+requestForm.addEventListener('submit', async ($e) => {
+    $e.preventDefault();
+    sendRequestBtn.value = 'Sending...';
+    sendRequestBtn.setAttribute('disabled', 'disabled');
     if (!email.value || !message.value) return;
     try {
         // Uses botpoison for span prevention
@@ -180,11 +183,10 @@ sendRequestBtn.addEventListener('click', async ($e) => {
             })
         });
         sendRequestBtn.classList.replace('btn-primary', 'btn-success');
-        sendRequestBtn.textContent = 'Sent!';
-        sendRequestBtn.setAttribute('disabled', 'disabled');
+        sendRequestBtn.value = 'Sent!';
     } catch(e) {
         sendRequestBtn.classList.replace('btn-primary', 'btn-danger');
-        sendRequestBtn.textContent = 'Try Again';
+        sendRequestBtn.value = 'Try Again';
         throw e;
     }
 });
