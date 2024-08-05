@@ -67,7 +67,7 @@ block content
                 th Host
                 th.text-center
                   button.btn(data-bs-toggle="tooltip" data-bs-title="Trackers obtained using the EU-EDPS website evidence collector tool", data-bs-placement="bottom")
-                    span.me-1 # of Trackers Found
+                    span.me-1 No. of Trackers Found
                     i.bi.bi-info-circle-fill.ml-2
                 th.text-center
                   button.btn(data-bs-toggle="tooltip" data-bs-title="Based on the average score of all trackers found", data-bs-placement="bottom")
@@ -83,7 +83,7 @@ block content
                     img.bg-white.p-1.me-2.border.rounded(src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"+ report.host + "&size=16", alt="")
                     span=report.host
                   td.text-center
-                    span=report.beacons
+                    span.badge.text-bg-light #{report.beacons}
                   td.text-center
                       .w-75.mx-auto
                         .progress(role="progressbar", aria-label="Info striped example", aria-valuenow="50", aria-valuemin="0", aria-valuemax="100")
