@@ -1,51 +1,35 @@
 extends layout
 
 block content
-  .text-center.pb-3.pb-md-5
+  .text-center.pb-md-5
     .container
       .row
         .col-xs-12.col-md-8.offset-md-2
-          h1.display-6.lead.py-1
+          h1.display-6.lead.pt-1
             | Uncover 
             strong.fw-bold Invisible Trackers 
             | on Popular Websites for a Secure Browsing Experience 
-          .row
-            .col-lg-8.offset-lg-2
-              .d-none.d-md-block
-                form.searchForm
-                  .input-group.input-group-lg
-                    span#inputGroup-sizing-lg.input-group-text.bg-light.text-dark 
-                      i.bi.bi-globe
-                    input.form-control.form-control-dark.search-bar#t(
-                      type='text', 
-                      aria-label='Search URL',
-                      aria-describedby='inputGroup-sizing-lg',
-                      placeholder="Search (e.g. apple.com)",
-                      title="Please enter valid URL",
-                      )
-              .d-md-none
-                form.searchForm
-                  .input-group.input-group
-                    span#inputGroup-sizing-lg.input-group-text 
-                      i.bi.bi-globe
-                    input.form-control.form-control-dark.search-bar#t(
-                      type='text', 
-                      aria-label='Search URL',
-                      aria-describedby='inputGroup-sizing-lg',
-                      placeholder="Search (e.g. apple.com)",,
-                      title="Please enter valid URL",
-                      )
-  .container
-    - var scores = [{text: 'Very Low', class: 'success', width: '0', color: 'text-light', value: '0'}, {text: 'Low', class: 'info', width: '25', color: 'text-dark', value: '1'}, {text: 'Moderate', class: 'warning', width: '50', color: 'text-dark', value: '2'}, {text: 'High', class: 'danger', width: '100', color: 'text-light', value: '3'}]
+  .container#homeBody
+    - var scores = [{text: 'Very Low', class: 'success', width: 0, color: 'text-light', value: '0'}, {text: 'Low', class: 'info', width: 25, color: 'text-dark', value: '1'}, {text: 'Moderate', class: 'warning', width: 50, color: 'text-dark', value: '2'}, {text: 'High', class: 'danger', width: 100, color: 'text-white', value: '3'}]
     .row
-      .col-lg-10.offset-lg-1
+      .col-lg-12
         .row
-          .col-12
-            .d-md-none
-              p.text-secondary.my-3.text-center
-               | Horizontal scroll enabled on mobile
-          .col-6.col-md-6
-            .d-flex.gap-2
+          .col-12.col-md-4
+            .row
+              .col-12
+                form.searchForm
+                  .input-group
+                    span#inputGroup-sizing-lg.input-group-text.bg-black.text-light 
+                      i.bi.bi-search
+                    input.form-control.form-control-dark.search-bar#t(
+                      type='text', 
+                      aria-label='Search URL',
+                      aria-describedby='inputGroup-sizing-lg',
+                      placeholder="Search Table by Host (e.g. apple.com)",
+                      title="Please enter valid URL",
+                    )
+          .col-12.col-md-8
+            .d-flex.justify-content-between.justify-content-md-end.gap-2.py-4.py-md-0.h-100.align-items-center
               .dropdown
                 a.btn.btn-sm.btn-light.dropdown-toggle(href="#", role="button", data-bs-toggle="dropdown", aria-expanded="false").
                   Sort By 
@@ -60,27 +44,35 @@ block content
                     a.dropdown-item(href="/?sort=trackers&order=desc") # of Trackers 9-1
               .dropdown
                 a.btn.btn-sm.btn-light.dropdown-toggle(href="#", role="button", data-bs-toggle="dropdown", aria-expanded="false")
-                  | Filter By 
+                  | Filter By
                 ul.dropdown-menu
                   li
-                    a.dropdown-item.filter-score-btn(type="button", data-score="all") All
+                    span.dropdown-item.border-bottom.text-secondary.mb-2
+                      | Fingerprinting Score
+                  li
+                    button.dropdown-item.filter-score-btn(type="button", data-score="all") All
                   each score in scores 
                     li
-                      a.dropdown-item.filter-score-btn(type="button", data-score="" + score.value) #{score.text}
-          .col-6.col-md-6
-            .d-flex.justify-content-end
-              span.badge.text-bg-light.py-2 #{data.length} websites analyzed
+                      button.dropdown-item.filter-score-btn(type="button", data-score="" + score.value) #{score.text}
+          .col-12
+            .d-md-none
+              p.text-light.fw-bold.my-3.text-center
+                i.bi.bi-phone.me-1
+                | Horizontal scroll on mobile
         .table-responsive.mt-2
           table.table.table-sm.table-striped#hosts
             thead
               tr
                 th #
                 th Host
-                th.text-center # of Trackers Found
                 th.text-center
-                  | Likelihood of fingerprinting 
-                  a(href="#" data-bs-toggle="tooltip" data-bs-title="Based on the average score of all trackers found", data-bs-placement="bottom")
-                    i.bi.bi-info-circle-fill
+                  button.btn(data-bs-toggle="tooltip" data-bs-title="Trackers obtained using the EU-EDPS website evidence collector tool", data-bs-placement="bottom")
+                    span.me-1 # of Trackers Found
+                    i.bi.bi-info-circle-fill.ml-2
+                th.text-center
+                  button.btn(data-bs-toggle="tooltip" data-bs-title="Based on the average score of all trackers found", data-bs-placement="bottom")
+                    span.me-1 Likelihood of fingerprinting
+                    i.bi.bi-info-circle-fill.ml-2
                 th.text-center Actions
             tbody
               each report, index in data
@@ -88,18 +80,21 @@ block content
                   td 
                     span=index+1
                   td
-                    img.bg-white.p-1.me-2.border.rounded(src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"+ report.host + "&size=16")
+                    img.bg-white.p-1.me-2.border.rounded(src="https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"+ report.host + "&size=16", alt="")
                     span=report.host
                   td.text-center
                     span=report.beacons
                   td.text-center
                       .w-75.mx-auto
                         .progress(role="progressbar", aria-label="Info striped example", aria-valuenow="50", aria-valuemin="0", aria-valuemax="100")
-                          .progress-bar(class="bg-" + scores[report.fingerprinting_average].class + " w-" + scores[report.fingerprinting_average].width + "")
-                            span.fw-normal(class="" + scores[report.fingerprinting_average].color + "") #{scores[report.fingerprinting_average].text} 
+                          .progress-bar(class="bg-" + scores[report.fingerprinting_average].class + "", style="width:" + scores[report.fingerprinting_average].width + "%")
+                            if scores[report.fingerprinting_average].width > 0
+                              span.fw-normal(class="" + scores[report.fingerprinting_average].color + "") #{scores[report.fingerprinting_average].text} 
+                          if scores[report.fingerprinting_average].width == 0
+                            span.fw-normal.w-100(class="" + scores[report.fingerprinting_average].color + "") #{scores[report.fingerprinting_average].text} 
                   td.text-center
                     button.btn.btn-sm.btn-outline-info(type="button", data-bs-toggle="modal", data-bs-target="#reportModal", data-host="" + report.host + "", data-average="" + report.fingerprinting_average + "") View Report
-        p.text-secondary.fs-6
+        p.text-light.fs-6
           i.bi.bi-info-circle.me-2
           | Results are based on 
           a(href="https://github.com/duckduckgo/tracker-radar/blob/main/docs/DATA_MODEL.md#fingerprinting-0-3") DuckDuckGo's tracker radar

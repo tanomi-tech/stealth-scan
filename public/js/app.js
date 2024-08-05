@@ -8,7 +8,9 @@ const requestModal = document.querySelector('#requestFormModal');
 const requestForm = document.querySelector('#requestForm');
 const email = requestModal.querySelector('#email');
 const message = requestModal.querySelector('#message');
+const requestType = requestModal.querySelector('#requestType');
 const sendRequestBtn = document.querySelector('#sendRequest');
+
 
 // Init Bootstrap 5 Tooltip
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -83,9 +85,11 @@ modal.addEventListener('show.bs.modal', async ({relatedTarget, target}) => {
                 <tr>
                     <td>${item.beacon}</trd>
                     <td>
-                        
-                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar ${scores[item.fingerprinting].color} bg-${scores[item.fingerprinting].class}" style="width: ${scores[item.fingerprinting].width}%">${scores[item.fingerprinting].text}</div>
+                        <div class="w-75 mx-auto">
+                            <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar ${scores[item.fingerprinting].color} bg-${scores[item.fingerprinting].class}" style="width: ${scores[item.fingerprinting].width}%">${scores[item.fingerprinting].text}</div>
+                                ${scores[item.fingerprinting].width == 0 ? '<span class="w-100 text-center">Very Low</span>' : ''}
+                            </div>
                         </div>
                     </td>
                     <td>
@@ -150,7 +154,7 @@ filterBtns.forEach((btn) => {
     });
 });
 
-requestModal.addEventListener('show.bs.modal', () => {
+requestModal.addEventListener('hide.bs.modal', () => {
     sendRequestBtn.value ='Send';
     sendRequestBtn.classList.remove('btn-success');
     sendRequestBtn.classList.remove('btn-danger');
@@ -158,6 +162,12 @@ requestModal.addEventListener('show.bs.modal', () => {
     sendRequestBtn.removeAttribute('disabled');
     email.value = '';
     message.value = '';
+    requestType.value = ''
+});
+
+requestModal.addEventListener('show.bs.modal', ({relatedTarget}) => {
+    const type = relatedTarget.dataset.formType;
+    requestType.value = type;
 });
 
 requestForm.addEventListener('submit', async ($e) => {
@@ -178,6 +188,7 @@ requestForm.addEventListener('submit', async ($e) => {
             },
             body: JSON.stringify({
                 email: email.value,
+                type: requestType.value,
                 message: message.value,
                 _botpoison: solution
             })

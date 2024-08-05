@@ -18,7 +18,7 @@ const botpoison = new Botpoison({
 });
 
 router.post('/', async (req, res) => {
-    const {email, message, _botpoison} = req.body;
+    const {email, message, type, _botpoison} = req.body;
     try {
         const { ok } = await botpoison.verify(_botpoison);
         if (!ok) {
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
             from: process.env.SS_RQST_FROM,
             to: process.env.SS_RQST_TO,
             subject: "Stealth Scan - Website Request",
-            text: `Email: ${email},\nMessage:\n${message}`,
+            text: `Email: ${email},\nType: ${type},\nMessage:\n${message}`,
           });
         res.json({
             success: true
