@@ -16,6 +16,7 @@
     "nodemailer": "^6.9.14",
     "pug": "2.0.0-beta11",
     "sqlite3": "^5.1.7",
-    "tslib": "^2.6.3"
+    "tslib": "^2.6.3",
+    "website-evidence-collector": "https://github.com/EU-EDPS/website-evidence-collector/tarball/latest"
   }
 }
