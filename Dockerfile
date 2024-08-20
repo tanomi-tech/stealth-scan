@@ -7,7 +7,7 @@ RUN apt-get install -y sqlite3
 WORKDIR /home/app/stealth-scan
 
 COPY . ./
-RUN npm install
+RUN npm install --production
 
 RUN node --env-file=.env ./database.js
 
