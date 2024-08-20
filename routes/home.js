@@ -4,22 +4,26 @@ const db = require('../database');
 
 router.get('/', function(req, res, next) {
   let orderby = ``;
-  let map = {
+  let queryMap = {
     names: 'host',
     trackers: 'beacons',
     asc: 'ASC',
     desc: 'DESC'
   }
   if (req.query?.sort && req.query?.order) {
-      const type = map[req.query.sort];
-      const order = map[req.query.order];
-      if (type && order) {
-        orderby = `order by ${type} ${order}`
-      }
+    const type = queryMap[req.query.sort];
+    const order = queryMap[req.query.order];
+  
+    if (type && order) {
+      orderby = `order by ${type} ${order}`
+    }
   }
+
   db.all(`
-    select host, count(host) as beacons, round(avg(fingerprinting), 0) as fingerprinting_average from reports
-    where host IS NOT ''
+    select host,
+    count(distinct beacon) beacons,
+    round(avg(fingerprinting), 0) as fingerprinting_average from reports
+    where host is not ''
     group by host
     ${orderby}
 `, (err, rows) => {

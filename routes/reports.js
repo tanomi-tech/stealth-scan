@@ -14,26 +14,11 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/hosts', (req, res) => {
-    db.all(`
-        select host, count(host) as beacons, round(avg(fingerprinting), 0) as fingerprinting_average from reports
-        where host IS NOT ''
-        group by host
-    `, (err, rows) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({
-                error: true
-            });
-        }
-        res.json(rows);
-    });
-});
-
 router.get('/host/:host', (req, res) => {
     db.all(`
         select * from reports
-        where host = ?`, req.params.host, (err, rows) => {
+        where host = ?
+        group by beacon`, req.params.host, (err, rows) => {
         if (err) {
             console.error(err);
             res.status(500).json({
